@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CertificadoController;
+use App\Http\Controllers\MakePdfController;
 use App\Http\Controllers\PersonaController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +26,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('qr', function () {
+    return QRCode::text('QR Code Generator for Laravel!')->png();
+});
+
+
+
+
+Route::get('/get/{id}', [MakePdfController::class, 'make']);
+
+
+
+
 Route::resource('persona', PersonaController::class);
 
 Route::get('/publico/certificado/index', [CertificadoController::class, 'index']);
 
 
-Route::prefix('ooooo')->group(function() {
+Route::prefix('ooooo')->group(function () {
     Auth::routes();
-  });
+});
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

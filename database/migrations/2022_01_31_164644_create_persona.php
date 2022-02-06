@@ -19,6 +19,11 @@ class CreatePersona extends Migration
             $table->string('apellidos');
             $table->string('tipo_documento');
             $table->string('num_documento');
+            $table->dateTimeTz('fecha_nacimiento');
+            $table->dateTimeTz('fecha_vacunacion');
+            $table->string('nacionalidad');
+            $table->string('sitio_vacunacion');
+            $table->string('sexo');
             $table->string('qr')->unique();
             $table->timestamps();
         });

@@ -31,6 +31,7 @@
                 <td>{{$persona->apellidos}}</td>
                 <td>{{$persona->tipo_documento}}</td>
                 <td>{{$persona->num_documento}}</td>
+                <td><a href="/get/{{$persona->id}}">CARNET 📄</a></td>
                 <td><a href="/publico/certificado/index?Tk={{$persona->qr}}">Ver Resultados</a></td>
                 <td><a href="#eliminar" onclick="eliminar({{$persona->id}})">🗑️ Eliminar</a></td>
             </tr>
