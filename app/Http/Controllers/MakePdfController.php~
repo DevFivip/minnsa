@@ -25,6 +25,8 @@ class MakePdfController extends Controller
         $res_fecha_segunda_dosis = $fecha_segunda_dosis->format('d/m/Y');
 	$code2 = $fecha_segunda_dosis->format('W') + 3;
 
+//	dd($code_primera_dosis,$code_segunda_dosis);
+
         $pdf = new FPDI('L', 'mm', [54, 171.20]);
 
         $pdf->AddPage();

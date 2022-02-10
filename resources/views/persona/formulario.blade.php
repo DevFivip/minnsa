@@ -39,6 +39,7 @@
         <br>
         <select name="tipo_documento" id="">
             <option value="CI"> CEDULA</option>
+	    <option value="CE">CARNET DE EXTRANJERIA</option>
             <option value="PASS"> PASAPORTE</option>
             <option value="DNI"> DNI</option>
             <option value="CPP"> CPP</option>
@@ -74,6 +75,7 @@
         <select name="sitio_vacunacion">
             <option value="norte">LIMA NORTE </option>
             <option value="sur">LIMA SUR </option>
+	<option value="piura">PIURA</option>
         </select>
         <br>
         <br>
