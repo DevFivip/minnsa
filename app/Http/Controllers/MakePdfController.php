@@ -19,8 +19,11 @@ class MakePdfController extends Controller
         $fecha_dosis = new DateTime($persona->fecha_vacunacion);
         $fecha_nacimiento = (new DateTime($persona->fecha_nacimiento))->format('d/m/Y');
         $res_fecha_primera_dosis = $fecha_dosis->format('d/m/Y');
-        $res_fecha_segunda_dosis = $fecha_dosis->modify('+ 32 day')->format('d/m/Y');
+	$code = $fecha_dosis->format('W');
 
+	$fecha_segunda_dosis = new DateTime($fecha_dosis->modify('+ 31 day')->format('Y-m-d'));
+        $res_fecha_segunda_dosis = $fecha_segunda_dosis->format('d/m/Y');
+	$code2 = $fecha_segunda_dosis->format('W') + 3;
 
         $pdf = new FPDI('L', 'mm', [54, 171.20]);
 
@@ -79,16 +82,16 @@ class MakePdfController extends Controller
         //Fabricante Lote 1era dosis
         $pdf->SetFont('Arial', 'B', '4');
         $pdf->SetXY(35.5, 38);
-        $pdf->Write(10, strtoupper('SINOPHARM (B2021082229)'));
+        $pdf->Write(10, strtoupper('SINOPHARM (B20210822'.$code.')'));
 
         //Fabricante Lote 2da dosis
         $pdf->SetFont('Arial', 'B', '4');
         $pdf->SetXY(35.5, 42.5);
-        $pdf->Write(10, strtoupper('SINOPHARM (B2021082236)'));
+        $pdf->Write(10, strtoupper('SINOPHARM (B20210822'.$code2.')'));
 
 
         //Lugar Lote 1era dosis
-        $zona = "sur";
+        $zona = $persona->sitio_vacunacion;
 
         if ($zona == 'sur') {
             $pdf->SetFont('Arial', 'B', '2.80');
@@ -104,6 +107,13 @@ class MakePdfController extends Controller
             $pdf->Write(10, strtoupper('LIMA NORTE - Universidad Cesar Vallejo'));
             $pdf->SetXY(63, 39);
             $pdf->Write(10, strtoupper('Lima - Lima Los Olivos'));
+        }
+	if ($zona == 'piura') {
+            $pdf->SetFont('Arial', 'B', '2.80');
+            $pdf->SetXY(57, 37);
+            $pdf->Write(10, strtoupper('PIURA - Universidad Privada De Piura'));
+            $pdf->SetXY(63, 39);
+            $pdf->Write(10, strtoupper('Piura Piura Piura'));
         }
 
         if ($zona == 'sur') {
@@ -121,6 +131,16 @@ class MakePdfController extends Controller
             $pdf->SetXY(63, 43.5);
             $pdf->Write(10, strtoupper('Lima - Lima Los Olivos'));
         }
+
+        if ($zona == 'piura') {
+            $pdf->SetFont('Arial', 'B', '2.80');
+            $pdf->SetXY(57, 41.5);
+            $pdf->Write(10, strtoupper('PIURA - Universidad Privada De Piura'));
+            $pdf->SetXY(63, 43.5);
+            $pdf->Write(10, strtoupper('Piura Piura Piura'));
+        }
+
+
 
         $link = env('APP_URL') . "/publico/certificado/index?Tk=" . $persona->qr;
 
