@@ -12,7 +12,7 @@
                     <h6><a href="/persona/create">+ Registro</a></h6>
 
 
-                    <table class="table table-striped">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <td>ID</td>
