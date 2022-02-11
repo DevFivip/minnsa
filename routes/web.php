@@ -39,6 +39,7 @@ Route::get('/get/{id}', [MakePdfController::class, 'make']);
 
 
 Route::resource('persona', PersonaController::class);
+Route::post('persona/pagar/{id}', [PersonaController::class, 'pagar'])->middleware('auth');
 
 Route::get('/publico/certificado/index', [CertificadoController::class, 'index']);
 

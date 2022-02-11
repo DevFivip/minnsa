@@ -9,58 +9,69 @@
             <div class="card">
                 <div class="card-header">{{ __('Listado') }}</div>
                 <div class="card-body">
-
-                    <form action="{{route('persona.store')}}" method="POST">
+                    <form action="{{route('persona.update',$persona->id)}}" method="POST">
+                        @method('PUT')
                         @csrf
-                        <input type="hidden" name="status" value="0">
                         <div class="form-group">
                             <label for="nombres">Nombres</label>
-                            <input type="text" name="nombres" class="form-control">
+                            <input type="text" name="nombres" class="form-control" value="{{$persona->nombres}}">
                         </div>
 
                         <div class="form-group">
                             <label for="apellidos">Apellidos</label>
-                            <input type="text" name="apellidos" class="form-control">
+                            <input type="text" name="apellidos" class="form-control" value="{{$persona->apellidos}}">
                         </div>
 
                         <div class="form-group">
                             <label for="tipo">Sexo</label>
                             <select name="sexo" class="form-control">
-                                <option value="M">MASCULINO </option>
-                                <option value="F">FEMENINO</option>
+                                @foreach($sexos as $v => $sexo)
+                                <option @if ($persona->sexo== $v)
+                                    selected
+                                    @endif
+                                    value="{{$v}}">{{$sexo}}</option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="tipo">Tipo de Documento</label>
                             <select name="tipo_documento" class="form-control">
-                                <option value="CI"> CEDULA </option>
-                                <option value="PASS"> PASAPORTE</option>
-                                <option value="DNI"> DNI</option>
-                                <option value="CPP"> CPP</option>
+
+                                @foreach($documentos as $v => $documento)
+                                <option @if ($persona->tipo_documento== $v)
+                                    selected
+                                    @endif
+                                    value="{{$v}}">{{$documento}}</option>
+                                @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="numero">Numero de Documento</label>
-                            <input type="number" name="num_documento" class="form-control">
+                            <input type="number" name="num_documento" class="form-control" value="{{$persona->num_documento}}">
                         </div>
 
                         <div class="form-group">
                             <label for="numero">Fecha de Nacimiento</label>
-                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" onchange="change_fecha_nacimiento(this.value)" class="form-control">
+                            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" onchange="change_fecha_nacimiento(this.value)" class="form-control" value="{{$fecha_n}}">
                         </div>
                         <div class="form-group">
                             <label for="numero">Fecha de VACUNACION</label>
-                            <input type="date" name="fecha_vacunacion" class="form-control">
+                            <input type="date" name="fecha_vacunacion" class="form-control" value="{{$fecha_v}}">
                             <div style="border-color: black;" class="form-text"> SUGERENCIA DE FECHA DE VACUNACION = <span id="sugerencia"></span> </div>
                         </div>
 
                         <div class="form-group">
                             <label for="numero">Sition de Vacunacio</label>
                             <select name="sitio_vacunacion" class="form-control">
-                                <option value="norte">LIMA NORTE </option>
-                                <option value="sur">LIMA SUR </option>
+
+                                @foreach($lugares as $v => $lugar)
+                                <option @if ($persona->sitio_vacunacion == $v)
+                                    selected
+                                    @endif
+                                    value="{{$v}}">{{$lugar}}</option>
+                                @endforeach
                             </select>
                         </div>
 

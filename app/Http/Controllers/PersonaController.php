@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Persona;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,7 +24,7 @@ class PersonaController extends Controller
     public function index()
     {
 
-        $personas = Persona::all();
+        $personas = Persona::orderBy('id','DESC')->get();
         return view('persona.index', ["personas" => $personas]);
         //
     }
@@ -81,6 +82,24 @@ class PersonaController extends Controller
     public function edit($id)
     {
         //
+        $persona = Persona::find($id);
+
+        $documentos = ['CI' => 'CEDULA', 'PASS' => 'PASSPORT', 'DNI' => 'DNI', 'CPP' => 'CPP', 'CE' => 'CARNET DE EXTRANJERIA'];
+        $sexos = ['M' => 'MASCULINO', 'F' => 'FEMENINO'];
+        $lugares = ['norte' => 'LIMA NORTE', 'sur' => 'LIMA SUR'];
+
+        $nacimiento = new DateTime($persona->fecha_nacimiento);
+        $fecha_n = $nacimiento->format('Y-m-d');
+        // $hora_n = $nacimiento->format('H:i');
+        // $fecha_nacimiento = $fecha_n . 'T' . $hora_n;
+
+
+        $vacunacion = new DateTime($persona->fecha_vacunacion);
+        $fecha_v = $vacunacion->format('Y-m-d');
+        // $hora_v = $vacunacion->format('H:i');
+        // $fecha_vacunacion = $fecha_v . 'T' . $hora_v;
+
+        return view('persona.edit', compact('persona', 'documentos', 'sexos', 'fecha_n', 'fecha_v', 'lugares'));
     }
 
     /**
@@ -92,6 +111,11 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $data = $request->all();
+        $persona = Persona::find($id);
+        $persona->update($data);
+        return redirect('persona');
         //
     }
 
@@ -108,4 +132,10 @@ class PersonaController extends Controller
 
         //
     }
+    public function pagar($id)
+    {
+        $persona = Persona::find($id);
+        $persona->update(['status' => ($persona->status === '0') ? '1' : '0']);
+        return $persona;
+    }   
 }

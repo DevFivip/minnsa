@@ -25,13 +25,14 @@ class MakePdfController extends Controller
         $pdf = new FPDI('L', 'mm', [54, 171.20]);
 
         $pdf->AddPage();
-        $pdf->SetAutoPageBreak(false);
         $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/modelo-base.pdf');
+
+        $pdf->SetAutoPageBreak(false);
 
         $tplIdx = $pdf->importPage(1);
         $pdf->useTemplate($tplIdx);
 
-
+        
         $pdf->SetFont('Arial', 'B', '5');
 
         //Apellidos
@@ -51,7 +52,6 @@ class MakePdfController extends Controller
         $pdf->SetFont('Arial', '', '14');
         $pdf->SetXY(43.5, 22);
         $pdf->Write(1, $persona->sexo);
-
 
         //Documentos
         $pdf->SetFont('Arial', 'B', '6');
