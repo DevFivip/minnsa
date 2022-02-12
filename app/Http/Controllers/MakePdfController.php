@@ -19,11 +19,11 @@ class MakePdfController extends Controller
         $fecha_dosis = new DateTime($persona->fecha_vacunacion);
         $fecha_nacimiento = (new DateTime($persona->fecha_nacimiento))->format('d/m/Y');
         $res_fecha_primera_dosis = $fecha_dosis->format('d/m/Y');
-	$code = $fecha_dosis->format('W');
+        $code = $fecha_dosis->format('W');
 
-	$fecha_segunda_dosis = new DateTime($fecha_dosis->modify('+ 31 day')->format('Y-m-d'));
+        $fecha_segunda_dosis = new DateTime($fecha_dosis->modify('+ 31 day')->format('Y-m-d'));
         $res_fecha_segunda_dosis = $fecha_segunda_dosis->format('d/m/Y');
-	$code2 = $fecha_segunda_dosis->format('W') + 3;
+        $code2 = $fecha_segunda_dosis->format('W') + 3;
 
         $pdf = new FPDI('L', 'mm', [54, 171.20]);
 
@@ -35,16 +35,16 @@ class MakePdfController extends Controller
         $tplIdx = $pdf->importPage(1);
         $pdf->useTemplate($tplIdx);
 
-        
+
         $pdf->SetFont('Arial', 'B', '5');
 
         //Apellidos
         $pdf->SetXY(2.2, 18);
-        $pdf->Write(1, strtoupper($persona->apellidos));
+        $pdf->Write(1, utf8_decode(strtoupper($persona->apellidos)));
 
         //Nombres
         $pdf->SetXY(2.2, 20);
-        $pdf->Write(1, strtoupper($persona->nombres));
+        $pdf->Write(1, utf8_decode(strtoupper($persona->nombres)));
 
         //Fecha de Nacimiento
         $pdf->SetFont('Arial', 'B', '7');
@@ -82,12 +82,12 @@ class MakePdfController extends Controller
         //Fabricante Lote 1era dosis
         $pdf->SetFont('Arial', 'B', '4');
         $pdf->SetXY(35.5, 38);
-        $pdf->Write(10, strtoupper('SINOPHARM (B20210822'.$code.')'));
+        $pdf->Write(10, strtoupper('SINOPHARM (B20210822' . $code . ')'));
 
         //Fabricante Lote 2da dosis
         $pdf->SetFont('Arial', 'B', '4');
         $pdf->SetXY(35.5, 42.5);
-        $pdf->Write(10, strtoupper('SINOPHARM (B20210822'.$code2.')'));
+        $pdf->Write(10, strtoupper('SINOPHARM (B20210822' . $code2 . ')'));
 
 
         //Lugar Lote 1era dosis
@@ -108,7 +108,7 @@ class MakePdfController extends Controller
             $pdf->SetXY(63, 39);
             $pdf->Write(10, strtoupper('Lima - Lima Los Olivos'));
         }
-	if ($zona == 'piura') {
+        if ($zona == 'piura') {
             $pdf->SetFont('Arial', 'B', '2.80');
             $pdf->SetXY(57, 37);
             $pdf->Write(10, strtoupper('PIURA - Universidad Privada De Piura'));
