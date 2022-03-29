@@ -13,6 +13,7 @@
         gtag('js', new Date());
         gtag('config', 'G-5SG0KRSQDH');
     </script>
+    <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Puedes verificar la aplicación de tu vacuna contra el coronavirus u otras que hayas recibido recientemente en el Carné de vacunación web del Ministerio de Salud. Aquí, está registrada la fecha y lugar donde se te inmunizó, además del tipo de vacuna que recibiste, el fabricante de la vacuna y el número de lote.">
     <meta name="keywords" content="Carnet Vacunas, Minsa, Covid19">

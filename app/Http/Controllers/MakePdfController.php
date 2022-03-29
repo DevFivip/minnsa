@@ -149,6 +149,10 @@ class MakePdfController extends Controller
         $pdf->Image('../storage/app/public/qr/' . $persona->id . '.png', 60, 17, 15, 15);
 
 
-        return $pdf->Output(strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos) . '.pdf', 'I');
+        $pdf->Image('../resources/pdf/firma.pdf', 45, 17, 15, 15);
+
+
+
+        return $pdf->Output(strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos) . '.pdf', 'D');
     }
 }
