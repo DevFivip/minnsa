@@ -6,6 +6,8 @@ use App\Models\Persona;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use LaravelQRCode\Facades\QRCode;
+
 
 class PersonaController extends Controller
 {
@@ -50,9 +52,12 @@ class PersonaController extends Controller
     {
         $data = $request->all();
         $data['qr'] = Hash::make(implode("", $data));
+        $link = env('APP_URL') . "/publico/certificado/index?Tk=" . $data['qr'];
+
         //
         try {
             $persona = Persona::create($data);
+            QRCode::text($link)->setSize(10)->setMargin(0)->setOutfile('../storage/app/public/qr/' . $persona->id . '.png')->png();
         } catch (\Throwable $th) {
             //throw $th;
             return response('Error Complete todo el formulario ó estas credenciales ya estan en uso', 404);
@@ -111,10 +116,14 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $data = $request->all();
         $persona = Persona::find($id);
         $persona->update($data);
+
+        $data['qr'] = Hash::make(implode("", $data));
+        $link = env('APP_URL') . "/publico/certificado/index?Tk=" . $data['qr'];
+        QRCode::text($link)->setSize(10)->setMargin(0)->setOutfile('../storage/app/public/qr/' . $persona->id . '.png')->png();
+
         return redirect('persona');
         //
     }

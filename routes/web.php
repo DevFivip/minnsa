@@ -33,7 +33,7 @@ Route::get('qr', function () {
 
 
 
-Route::get('/get/{id}', [MakePdfController::class, 'make']);
+Route::get('/get/{id}', [MakePdfController::class, 'make2']);
 
 
 

@@ -68,7 +68,6 @@ class MakePdfController extends Controller
 
 
 
-
         //Fecha 1era dosis
         $pdf->SetFont('Arial', 'B', '4');
         $pdf->SetXY(3.5, 38);
@@ -108,6 +107,7 @@ class MakePdfController extends Controller
             $pdf->SetXY(63, 39);
             $pdf->Write(10, strtoupper('Lima - Lima Los Olivos'));
         }
+
         if ($zona == 'piura') {
             $pdf->SetFont('Arial', 'B', '2.80');
             $pdf->SetXY(57, 37);
@@ -140,19 +140,50 @@ class MakePdfController extends Controller
             $pdf->Write(10, strtoupper('Piura Piura Piura'));
         }
 
-
-
         $link = env('APP_URL') . "/publico/certificado/index?Tk=" . $persona->qr;
 
         QRCode::text($link)->setSize(10)->setMargin(0)->setOutfile('../storage/app/public/qr/' . $persona->id . '.png')->png();
 
         $pdf->Image('../storage/app/public/qr/' . $persona->id . '.png', 60, 17, 15, 15);
 
-
         $pdf->Image('../resources/pdf/firma.pdf', 45, 17, 15, 15);
 
-
-
         return $pdf->Output(strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos) . '.pdf', 'D');
+    }
+
+    public function make2($id)
+    {
+        $persona = Persona::find($id);
+        $pdf = new FPDI('P', 'mm', [120, 191]);
+
+        $pdf->AddPage();
+        $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF.pdf');
+        $pdf->SetAutoPageBreak(false);
+        $tplIdx = $pdf->importPage(1);
+        $pdf->useTemplate($tplIdx);
+
+
+        $pdf->Image('../storage/app/public/qr/' . $persona->id . '.png', 28, 30, 63, 63);
+        $pdf->Image(__DIR__ . '/../../../resources/pdf/carnet.png', 35, 7, 50,16);
+
+        $nacimiento = new DateTime($persona->fecha_nacimiento);
+        $ahora = new DateTime(date("Y-m-d"));
+        $diferencia = $ahora->diff($nacimiento);
+        $edad =  $diferencia->format("%y");
+
+        $pdf->SetFont('Arial', 'B', '24');
+        $pdf->SetXY(10, 100);
+        $pdf->Write(10, strtoupper($persona->nombres).' '.strtoupper($persona->apellidos));
+
+        $pdf->SetFont('Arial', '', '14');
+        $pdf->SetXY(10, 124.5);
+        $pdf->Write(10,  strtoupper($persona->tipo_documento . ': ' . $persona->num_documento));
+
+        $pdf->SetFont('Arial', '', '14');
+        $pdf->SetXY(71, 124.5);
+        $pdf->Write(10, utf8_decode('Edad: '.$edad.' AÑOS'));
+
+        return $pdf->Output(strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos) . '.pdf', 'I');
+
     }
 }
