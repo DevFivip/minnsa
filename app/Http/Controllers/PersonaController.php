@@ -120,10 +120,6 @@ class PersonaController extends Controller
         $persona = Persona::find($id);
         $persona->update($data);
 
-        $data['qr'] = Hash::make(implode("", $data));
-        $link = env('APP_URL') . "/publico/certificado/index?Tk=" . $data['qr'];
-        QRCode::text($link)->setSize(10)->setMargin(0)->setOutfile('../storage/app/public/qr/' . $persona->id . '.png')->png();
-
         return redirect('persona');
         //
     }
