@@ -26,7 +26,7 @@ class PersonaController extends Controller
     public function index()
     {
 
-        $personas = Persona::orderBy('id','DESC')->get();
+        $personas = Persona::orderBy('id', 'DESC')->get();
         return view('persona.index', ["personas" => $personas]);
         //
     }
@@ -134,7 +134,6 @@ class PersonaController extends Controller
     {
         $persona = Persona::find($id)->delete();
         return response()->json(['status' => true, 'persona' => $persona], 200);
-
         //
     }
     public function pagar($id)
@@ -142,5 +141,5 @@ class PersonaController extends Controller
         $persona = Persona::find($id);
         $persona->update(['status' => ($persona->status === '0') ? '1' : '0']);
         return $persona;
-    }   
+    }
 }

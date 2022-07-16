@@ -157,14 +157,19 @@ class MakePdfController extends Controller
         $pdf = new FPDI('P', 'mm', [120, 191]);
 
         $pdf->AddPage();
-        $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF.pdf');
+        if ($persona->dosis === 4) {
+            $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF.pdf');
+        } elseif ($persona->dosis === 3) {
+            $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF-3dosis.pdf');
+        }
+
         $pdf->SetAutoPageBreak(false);
         $tplIdx = $pdf->importPage(1);
         $pdf->useTemplate($tplIdx);
 
 
         $pdf->Image('../storage/app/public/qr/' . $persona->id . '.png', 28, 30, 63, 63);
-        $pdf->Image(__DIR__ . '/../../../resources/pdf/carnet.png', 35, 7, 50,16);
+        $pdf->Image(__DIR__ . '/../../../resources/pdf/carnet.png', 35, 7, 50, 16);
 
         $nacimiento = new DateTime($persona->fecha_nacimiento);
         $ahora = new DateTime(date("Y-m-d"));
@@ -173,7 +178,7 @@ class MakePdfController extends Controller
 
         $pdf->SetFont('Arial', 'B', '24');
         $pdf->SetXY(10, 100);
-        $pdf->Write(10, strtoupper($persona->nombres).' '.strtoupper($persona->apellidos));
+        $pdf->Write(10, strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos));
 
         $pdf->SetFont('Arial', '', '14');
         $pdf->SetXY(10, 124.5);
@@ -181,9 +186,8 @@ class MakePdfController extends Controller
 
         $pdf->SetFont('Arial', '', '14');
         $pdf->SetXY(71, 124.5);
-        $pdf->Write(10, utf8_decode('Edad: '.$edad.' AÑOS'));
+        $pdf->Write(10, utf8_decode('Edad: ' . $edad . ' AÑOS'));
 
         return $pdf->Output(strtoupper($persona->nombres) . ' ' . strtoupper($persona->apellidos) . '.pdf', 'I');
-
     }
 }

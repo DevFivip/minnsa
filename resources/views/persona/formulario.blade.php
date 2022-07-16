@@ -69,6 +69,15 @@
                             <input type="text" name="nacionalidad" value="VENEZOLANA" class="form-control">
                         </div>
 
+
+                        <div class="form-group">
+                            <label for="tipo">Cantidad de Dosis</label>
+                            <select name="dosis" class="form-control">
+                                <option value="3"> 3 dosis </option>
+                                <option value="4"> 4 dosis </option>
+                            </select>
+                        </div>
+
                         <br><br>
 
                         <input type="submit" value="Guardar" class="btn btn-primary">
