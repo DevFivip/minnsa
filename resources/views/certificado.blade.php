@@ -971,7 +971,7 @@
                                                 <div class="px-8 pt-6">
                                                     <div class="flex justify-center"><img src="https://carnetvacunacion.minsa.gob.pe/assets/carnet.png" alt="" class="w-2/4"></div>
                                                     <div>
-                                                        <qr-code class="flex justify-center mt-4"><img height="183" width="183" src=""></qr-code>
+                                                        <qr-code class="flex justify-center mt-4"><img height="183" width="183" src="/storage/qr/{{$persona['id']}}.png"></qr-code>
                                                     </div>
                                                     <div class="flex justify-center"><span class="font-extrabold text-textos text-[22px] xl:leading-[28px] uppercase mt-4 text-center"> {{ strtoupper($persona['nombres']) }} {{ strtoupper($persona['apellidos']) }} </span></div>
                                                     <div class="flex justify-between mt-4"><span class="font-semibold text-base"><span class="text-sm font-normal">{{ strtoupper($persona['tipo_documento']) }}: </span> {{ substr($persona['num_documento'], 0, 2) . 'XXXX' . substr($persona['num_documento'], 6) }}</span><span class="font-semibold text-base"><span class="text-sm font-normal">Edad:</span> {{$edad}} AÑOS</span></div>
