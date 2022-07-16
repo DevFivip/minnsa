@@ -157,9 +157,9 @@ class MakePdfController extends Controller
         $pdf = new FPDI('P', 'mm', [120, 191]);
 
         $pdf->AddPage();
-        if ($persona->dosis === 4) {
+        if ($persona->dosis == 4) {
             $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF.pdf');
-        } elseif ($persona->dosis === 3) {
+        } elseif ($persona->dosis == 3) {
             $pdf->setSourceFile(__DIR__ . '/../../../resources/pdf/BASENUEVACVMINSAJPG2DEF-3dosis.pdf');
         }
 
